@@ -150,10 +150,11 @@ methods, given the same emotion category as input.
 ## Citation
 If you find this work useful, please kindly cite our paper:
 ```
-@article{yang2024emogen,
-  title={EmoGen: Emotional Image Content Generation with Text-to-Image Diffusion Models},
+@inproceedings{yang2024emogen,
+  title={Emogen: Emotional image content generation with text-to-image diffusion models},
   author={Yang, Jingyuan and Feng, Jiawei and Huang, Hui},
-  journal={arXiv preprint arXiv:2401.04608},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={6358--6368},
   year={2024}
 }
 ```
