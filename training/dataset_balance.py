@@ -3,8 +3,10 @@ import os
 import random
 import pickle
 
-property = "scene"  # "object"
-data_root = f"/mnt/d/dataset/EmoSet/0103_split_to_folder/{property}"
+# property = "scene"  # "object"
+property = "object"  # "object"
+# data_root = f"/mnt/d/dataset/EmoSet/0103_split_to_folder/{property}"
+data_root = f"/mnt/d/dataset/EmoSet/LableSplit_20260529_074548/{property}"
 image_paths = []
 for root, _, file_path in os.walk(data_root):
     for file in file_path:
@@ -58,5 +60,5 @@ for emo, path in emotion_counts.items():
 # 随机打乱图像列表
 random.shuffle(image_paths)
 
-with open(f'dataset_balance/{property}_norepeat.pkl', 'wb') as f:
+with open(f'../dataset_balance/{property}_norepeat.pkl', 'wb') as f:
     pickle.dump(image_paths, f)

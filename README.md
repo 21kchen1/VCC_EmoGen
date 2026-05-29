@@ -1,12 +1,12 @@
 # EmoGen: Emotional Image Content Generation with Text-to-Image Diffusion Models (CVPR 2024)
-> [Jingyuan Yang](https://jingyuanyy.github.io/), Jiawei Feng, [Hui Huang*](https://vcc.tech/~huihuang)  
-> Shenzhen University  
+> [Jingyuan Yang](https://jingyuanyy.github.io/), Jiawei Feng, [Hui Huang*](https://vcc.tech/~huihuang)
+> Shenzhen University
 > Recent years have witnessed remarkable progress in image generation task, where users can create visually astonishing images with high-quality. However, exsiting text-to-image diffusion models are proficient in generating concrete concepts (dogs) but encounter challenges with more abstract ones (emotions). Several efforts have been made to modify image emotions with color and style adjustments, facing limitations in effectively conveying emotions with fixed image contents. In this work, we introduce Emotional Image Content Generation (EIGC), a new task to generate semantic-clear and emotion-faithful images given emotion categories. Specifically, we propose an emotion space and construct a mapping network to align it with powerful Contrastive Language-Image Pre-training (CLIP) space, providing a concrete interpretation of abstract emotions. Attribute loss and emotion confidence are further proposed to ensure the semantic diversity and emotion fidelity of the generated images. Our method outperforms the state-the-art text-to-image approaches both quantitatively and qualitatively, where we derive three custom metrics, i.e.,emotion accuracy, semantic clarity and semantic diversity. In addition to generation, our method can help emotion understanding and inspire emotional art design.
 
 <a href="https://arxiv.org/abs/2401.04608"><img src="https://img.shields.io/badge/arXiv-2401.04608-b31b1b.svg" height=22.5></a>
 
 <p align="left">
-<img src="docs/teaser.png" width="1200px"/>  
+<img src="docs/teaser.png" width="1200px"/>
 <br>
 Fig 1. Given an emotion category, our network produces images that exhibit unambiguous meanings (semantic-clear), reflect the intended emotion (emotion-faithful) and incorporate varied semantics (semantic-diverse).
 </p>
@@ -16,7 +16,7 @@ Official implementation of our EmoGen paper.
 
 ## Pipeline
 <p align="left">
-<img src="docs/method-1.png" width="1200px"/>  
+<img src="docs/method-1.png" width="1200px"/>
 <br>
 Fig 2. Training process of our network. Emotion representation (stage 1) learns a well-behaved emotion space and emotion content generation (stage 2) maps this space to CLIP space, aiming to generate image contents with emotion fidelity, semantic clarity and diversity.
 </p>
@@ -83,7 +83,7 @@ You can modify config/config.yaml to change some details.
 ### Emotion Creation
 
 <p align="left">
-<img src="docs/exp-5.png" width="1500px"/>  
+<img src="docs/exp-5.png" width="1500px"/>
 <br>
 Fig 3. Emotion creation. (a) transfers emotion representations (i.e., amusement, fear) to a series of neutral contents while (b) fuse two emotions (i.e., amusement-awe, amusement-fear) together, which may be helpful for emotional art design.
 </p>
@@ -118,13 +118,13 @@ this code has similar structure as training/inference.py.
 ## Results
 #### Comparison with other diffusion models
 <p align="left">
-<img src="docs/exp-1.png" width="1000px"/>  
+<img src="docs/exp-1.png" width="1000px"/>
 <br>
 Fig 4. Qualitative comparisions with the state-of-the-art text-to-image generation approaches and ablation studies of our method.
 </p>
 
 <div align="center">
-     
+
 Table 1. Comparisons with the state-of-the-art methods on emotion generation task, involving five metrics.
 | Method | FID &darr; | LPIPS &uarr; | Emo-A &uarr; | Sem-C &uarr; | Sem-D &uarr; |
 |:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
