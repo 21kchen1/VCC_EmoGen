@@ -158,3 +158,17 @@ If you find this work useful, please kindly cite our paper:
   year={2024}
 }
 ```
+
+# 复现流程
+1. 下载 EmoSet
+2. 编写数据集拆分代码，执行 dataset_split.py
+3. 使用 huggingface 下载对应版本的 stable-diffusion 和 clip，并修改 pretrain 模型载入路径
+
+```
+stable-diffusion https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5
+clip: https://huggingface.co/openai/clip-vit-large-patch14?library=transformers
+```
+
+4. 安装 git lfs，重新拉取仓库中的权重文件 2023-08-22-best.pth
+5. accelerate 设置为当前硬件规格
+6. 执行 accelerate launch training\main.py

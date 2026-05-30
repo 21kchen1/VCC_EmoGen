@@ -576,8 +576,10 @@ def main(args):
     unet = UNet2DConditionModel.from_pretrained(
         args.pretrained_model_name_or_path, subfolder="unet", revision=args.revision
     )
-    model = CLIPModel.from_pretrained("model/clip-vit-large-patch14")
-    processor = CLIPProcessor.from_pretrained("model/clip-vit-large-patch14")
+    model = CLIPModel.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14")
+    processor = CLIPProcessor.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14")
+    # model = CLIPModel.from_pretrained("model/clip-vit-large-patch14")
+    # processor = CLIPProcessor.from_pretrained("model/clip-vit-large-patch14")
 
     # Load image encoder and FC
     encoder = image_encoder()

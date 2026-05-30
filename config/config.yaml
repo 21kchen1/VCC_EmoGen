@@ -12,6 +12,8 @@ num_fc_layers: 2
 num_train_epochs: 1
 output_dir: runs/test
 pretrained_model_name_or_path: /mnt/d/model/stable-diffusion-v1-5/
+
+# pretrained_model_name_or_path: stable-diffusion-v1-5/stable-diffusion-v1-5
 seed: 520
 threshold: 0
 train_data_dir: /mnt/d/dataset/EmoSet/LableSplit_20260529_074548/
