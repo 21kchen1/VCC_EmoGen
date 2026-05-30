@@ -11,7 +11,8 @@ import random
 from torch.utils.data import Dataset
 from torchvision import transforms
 import pickle
-import torch.functional as F
+# import torch.functional as F
+import torch.nn.functional as F
 
 
 @torch.no_grad()
@@ -31,6 +32,7 @@ def count_relate(img, model, processor):
 @torch.no_grad()
 def inference(arg, emotion):
     working_path = arg.working_path
+    print(working_path)
     device = torch.device(arg.device if torch.cuda.is_available() else "cpu")  # TODO
     placeholder_token = f"<{emotion}>"
     save_dir = f"{working_path}/img/{emotion}"
@@ -43,8 +45,10 @@ def inference(arg, emotion):
     batch_size = len(prompt)
     num_picture = arg.num_picture
     repo_id = arg.repo_id
-    model = CLIPModel.from_pretrained("clip-vit-large-patch14").to(device)
-    processor = CLIPProcessor.from_pretrained("clip-vit-large-patch14")
+    model = CLIPModel.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14").to(device)
+    processor = CLIPProcessor.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14")
+    # model = CLIPModel.from_pretrained("clip-vit-large-patch14").to(device)
+    # processor = CLIPProcessor.from_pretrained("clip-vit-large-patch14")
     vae = AutoencoderKL.from_pretrained(repo_id, subfolder="vae")
     vae.to(device)
 
@@ -180,8 +184,10 @@ def emo_cls(cur_dir, device, weight):
     classifier.load_state_dict(state)
     classifier.eval()
 
-    CLIPmodel = CLIPModel.from_pretrained("clip-vit-large-patch14").to(device)
-    processor = CLIPProcessor.from_pretrained("clip-vit-large-patch14")
+    CLIPmodel = CLIPModel.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14").to(device)
+    processor = CLIPProcessor.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14")
+    # CLIPmodel = CLIPModel.from_pretrained("clip-vit-large-patch14").to(device)
+    # processor = CLIPProcessor.from_pretrained("clip-vit-large-patch14")
 
     class EmoDataset(Dataset):
         def __init__(self, data_root, processor):
@@ -298,7 +304,8 @@ def generate(cur_dir, device,model, num_fc_layers=1, need_LN=False, need_ReLU=Fa
     emotion_list = ["amusement", "excitement", "awe", "contentment", "fear", "disgust", "anger", "sadness"]
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_picture', type=int, default=10)
-    parser.add_argument('--repo_id', type=str, default="stable-diffusion-v1-5/")
+    # parser.add_argument('--repo_id', type=str, default="stable-diffusion-v1-5/")
+    parser.add_argument('--repo_id', type=str, default="/mnt/d/model/stable-diffusion-v1-5/")
     parser.add_argument('--device', type=str, default=device)
     #####################################################################################
     parser.add_argument('--working_path', type=str, default=cur_dir)
@@ -321,7 +328,7 @@ if __name__ == "__main__":
         "runs/test",
     ]
     # choose which epoch do you want to generate
-    epochs = [0]
+    # epochs = [0]
     device = "cuda:0"
 
     # emotion_classifier's weight
@@ -338,6 +345,7 @@ if __name__ == "__main__":
         try:
             for i in epochs:
                 output_dir = os.path.join(origin, str(i))
+
                 # use_prompt = True
                 # generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout, use_prompt)
                 generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout)

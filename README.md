@@ -163,6 +163,8 @@ If you find this work useful, please kindly cite our paper:
 1. 下载 EmoSet
 2. 编写数据集拆分代码，执行 dataset_split.py
 3. 使用 huggingface 下载对应版本的 stable-diffusion 和 clip，并修改 pretrain 模型载入路径
+* inference 的 repo_id 和 clip 的路径要改
+* main 的 stable-diffusion 和 clip 的路径要改
 
 ```
 stable-diffusion https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5
@@ -172,3 +174,4 @@ clip: https://huggingface.co/openai/clip-vit-large-patch14?library=transformers
 4. 安装 git lfs，重新拉取仓库中的权重文件 2023-08-22-best.pth
 5. accelerate 设置为当前硬件规格
 6. 执行 accelerate launch training\main.py
+7. inference 提供了按 epochs 生成图像的功能。需要根据训练时使用的 epochs，设置 inference 中 epochs = [0] 的值，需要查看 runs/test 中，你的训练轮次会不会产生 epochs 文件夹，比如 runs/test/0, runs/test/1，只有训练的 epochs 较大时才会出现上述文件夹，如果没有，则直接注释 inference 中 epochs = [0]。

@@ -1,3 +1,4 @@
 .idea/
 .vscode
 *.pyc
+runs/test/img
