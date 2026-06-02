@@ -1,12 +1,56 @@
+
+/ 50000
 emo_score (8 class): 0.11
 accuracy (8 class): 8.75%
 emo_score (2 class): 0.53
 accuracy (2 class): 52.50%
-amusement accuracy:10.00% score:0.15 
-awe accuracy:0.00% score:0.06 
-contentment accuracy:0.00% score:0.04 
-excitement accuracy:0.00% score:0.03 
-anger accuracy:0.00% score:0.02 
-disgust accuracy:0.00% score:0.02 
-fear accuracy:40.00% score:0.34 
-sadness accuracy:20.00% score:0.22 
+amusement accuracy:10.00% score:0.15
+awe accuracy:0.00% score:0.06
+contentment accuracy:0.00% score:0.04
+excitement accuracy:0.00% score:0.03
+anger accuracy:0.00% score:0.02
+disgust accuracy:0.00% score:0.02
+fear accuracy:40.00% score:0.34
+sadness accuracy:20.00% score:0.22
+
+/ 50000
+emo_score (8 class): 0.77
+accuracy (8 class): 88.75%
+emo_score (2 class): 0.92
+accuracy (2 class): 96.25%
+amusement accuracy:90.00% score:0.83
+awe accuracy:90.00% score:0.78
+contentment accuracy:90.00% score:0.60
+excitement accuracy:60.00% score:0.60
+anger accuracy:80.00% score:0.74
+disgust accuracy:100.00% score:0.91
+fear accuracy:100.00% score:0.82
+sadness accuracy:100.00% score:0.90
+
+/ 150000
+emo_score (8 class): 0.73
+accuracy (8 class): 82.50%
+emo_score (2 class): 0.92
+accuracy (2 class): 95.62%
+amusement accuracy:95.00% score:0.86
+awe accuracy:80.00% score:0.70
+contentment accuracy:80.00% score:0.56
+excitement accuracy:40.00% score:0.43
+anger accuracy:85.00% score:0.75
+disgust accuracy:85.00% score:0.80
+fear accuracy:100.00% score:0.89
+sadness accuracy:95.00% score:0.87
+
+/ 150000
+emo_score (8 class): 0.71
+accuracy (8 class): 83.75%
+emo_score (2 class): 0.89
+accuracy (2 class): 93.75%
+amusement accuracy:100.00% score:0.86
+awe accuracy:80.00% score:0.59
+contentment accuracy:80.00% score:0.63
+excitement accuracy:50.00% score:0.35
+anger accuracy:90.00% score:0.82
+disgust accuracy:70.00% score:0.63
+fear accuracy:100.00% score:0.91
+sadness accuracy:100.00% score:0.92

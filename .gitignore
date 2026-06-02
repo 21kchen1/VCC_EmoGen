@@ -1,4 +1,4 @@
 .idea/
-.vscode
+.v
 *.pyc
-runs/test/img
+runs/**/*.jpg
