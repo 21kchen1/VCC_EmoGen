@@ -154,7 +154,7 @@ def size_dataset(root_path: str) -> None:
 
 DATASET_ROOT_PATH = "/mnt/d/dataset/EmoSet"
 # SPLIT_OUTPUT_PATH = f"/mnt/d/dataset/EmoSet/LableSplit_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-SPLIT_OUTPUT_PATH = f"/mnt/d/dataset/EmoSet/LableSplit_Test1"
+SPLIT_OUTPUT_PATH = f"/mnt/d/dataset/EmoSet/LableSplit_Test"
 propertys = ["object", "scene"]
 
 annoClassifiers = [
@@ -165,8 +165,9 @@ annoClassifiers = [
 CHECK_DATASET_PATH = "/mnt/d/dataset/EmoSet/LableSplit_20260529_074548"
 
 def main() -> None:
-    split_dataset(DATASET_ROOT_PATH, SPLIT_OUTPUT_PATH, annoClassifiers)
+    # split_dataset(DATASET_ROOT_PATH, SPLIT_OUTPUT_PATH, annoClassifiers)
     # size_dataset(CHECK_DATASET_PATH)
+    rename_dataset(SPLIT_OUTPUT_PATH, annoClassifiers)
 
 if __name__ == "__main__":
     main()

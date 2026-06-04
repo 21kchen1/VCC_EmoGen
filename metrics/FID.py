@@ -36,6 +36,8 @@ class ImageFolderDataset(Dataset):
                 if self._is_valid_img_file(fname):
                     path = os.path.join(root, fname)
                     img_paths.append(path)
+
+        # print(len(img_paths))
         return img_paths
 
     def __getitem__(self, index):
@@ -174,6 +176,7 @@ class FIDRunner:
             fid.update(img, real=real)
 
 # fake_img_root = "runs/test/img/"
+fake_img_root = "runs/test/Train_50000_best/img/"
 fake_img_root = "runs/Train_150000/img_150000_2"
 
 if __name__ == '__main__':

@@ -62,8 +62,8 @@ def Semantic_diversity(wkdir, subdir, num_sample, device):
                     "anger","disgust","fear","sadness"]
     images_path = []
     curdir = os.path.join(wkdir, subdir)
-    model = CLIPModel.from_pretrained("/mnt/d/model/clip-vit-large-patch14").to(device)
-    processor = CLIPProcessor.from_pretrained("/mnt/d/model/clip-vit-large-patch14")
+    model = CLIPModel.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14").to(device)
+    processor = CLIPProcessor.from_pretrained("/mnt/d/model/CLIP/clip-vit-large-patch14")
     loss_fn_alex = lpips.LPIPS(net='alex')
     record = {"lpips_score":[], "difference_score":[], "mse_score":[]}
     # search one emotion's semantic_diversity
@@ -75,6 +75,8 @@ def Semantic_diversity(wkdir, subdir, num_sample, device):
                 if file.endswith("jpg"):
                     path = os.path.join(root, file)
                     images_path.append(path)
+
+        # print(len(images_path))
 
         # randomly select two picture and do distance calculation
         total_lpips = []
@@ -160,8 +162,10 @@ if __name__ == "__main__":
     device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
     num_sample = 10
     # file = "/mnt/d/Emo-generation/DB_5"
-    file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000"
-    sub_dir = 'img_50000'
+    # file = "/mnt/d/code/VCC_EmoGen/runs/test"
+    # file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000"
+    file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000_best"
+    sub_dir = 'img'
     Semantic_clarity(file, sub_dir, device)
     Semantic_diversity(file, sub_dir, num_sample, device)
 

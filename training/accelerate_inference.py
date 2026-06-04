@@ -1,3 +1,15 @@
+#!/usr/bin/env python3.8
+# -*- coding: utf-8 -*-
+
+r"""
+@DATE    :   2026-06-04 20:37:48
+@Author  :   Chen
+@File    :   code/VCC_EmoGen/training/accelerate_inference.py
+@Software:   VSCode
+@Description:
+    使用 accelerate 加速的推理
+"""
+
 import sys
 import torch
 import os
@@ -299,7 +311,7 @@ def emo_cls(cur_dir, device, weight):
             f.write(f'{Emotion[i]} accuracy:{tmp:.2f}% score:{(Emo_score[i]/Emo_num[i]):.2f} \n')
 
 
-def generate(cur_dir, device,model, num_fc_layers=1, need_LN=False, need_ReLU=False, need_Dropout=False, use_prompt=False, use_accel: bool= False):
+def generate(cur_dir, device,model, num_picture, num_fc_layers=1, need_LN=False, need_ReLU=False, need_Dropout=False, use_prompt=False, use_accel: bool= False):
     all_emotion_list = ["amusement", "excitement", "awe", "contentment", "fear", "disgust", "anger", "sadness"]
 
     if use_accel:
@@ -314,7 +326,7 @@ def generate(cur_dir, device,model, num_fc_layers=1, need_LN=False, need_ReLU=Fa
         print(f"[Single-GPU] all emotion: {emotion_list}")
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--num_picture', type=int, default=1000)
+    parser.add_argument('--num_picture', type=int, default=num_picture)
     # parser.add_argument('--repo_id', type=str, default="stable-diffusion-v1-5/")
     parser.add_argument('--repo_id', type=str, default="/mnt/d/model/stable-diffusion-v1-5/")
     parser.add_argument('--device', type=str, default=device)
@@ -337,25 +349,25 @@ if __name__ == "__main__":
     import json, argparse
 
     file = [
+        # "runs/test",
         "runs/test",
     ]
 
-    #是否启动加速
-    main_parser = argparse.ArgumentParser()
-    main_parser.add_argument("--use_accel", type= bool, default= False, help="Launch accelerate?")
-    args_main = main_parser.parse_args()
+    # 每个类别生成的图像数量
+    num_pic = 1000
 
     # choose which epoch do you want to generate
     # epochs = [0]
     epochs = []
 
+    use_accel = False
     # 设置设备
-    if args_main.use_accel:
+    try:
         from accelerate import Accelerator
         accelerator = Accelerator()
         device = accelerator.device
-    else:
-        accelerator = None
+        use_accel = True
+    except:
         device = "cuda:0"
 
     # emotion_classifier's weight
@@ -379,11 +391,11 @@ if __name__ == "__main__":
         for output_dir in output_dirs:
             # use_prompt = True
             # generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout, use_prompt)
-            generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout, use_accel= args_main.use_accl)
+            generate(output_dir, device, model, num_pic, num_fc_layers, need_LN, need_ReLU, need_Dropout, use_accel= use_accel)
             # 等待所有进程完成
-            if args_main.use_accel and accelerator:
+            if use_accel and accelerator:
                 accelerator.wait_for_everyone()
 
             # 只在主进程评估
-            if not args_main.use_accel or (accelerator and accelerator.is_main_process):
+            if not use_accel or (accelerator and accelerator.is_main_process):
                 emo_cls(output_dir, device, weight)

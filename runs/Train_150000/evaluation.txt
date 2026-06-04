@@ -40,3 +40,5 @@ anger accuracy:85.00% score:0.75
 disgust accuracy:85.00% score:0.80
 fear accuracy:100.00% score:0.89
 sadness accuracy:95.00% score:0.87
+
+/ 1000 张分类

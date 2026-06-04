@@ -1,0 +1,28 @@
+/ img 各 10000 张分类精度
+emo_score (8 class): 0.73
+accuracy (8 class): 81.90%
+emo_score (2 class): 0.88
+accuracy (2 class): 90.92%
+amusement accuracy:98.50% score:0.93
+awe accuracy:90.60% score:0.80
+contentment accuracy:70.00% score:0.51
+excitement accuracy:61.60% score:0.51
+anger accuracy:65.00% score:0.54
+disgust accuracy:79.00% score:0.74
+fear accuracy:99.70% score:0.97
+sadness accuracy:90.80% score:0.85
+
+/ FID img
+amusement: 97.56
+anger: 85.07
+awe: 102.16
+contentment: 89.44
+disgust: 210.55
+excitement: 95.13
+fear: 108.55
+sadness: 161.64
+aggregated: 50.11
+
+Semantic_Clarity_score: 0.655
+LPIPS score: 0.732 
+Semantic diversity score (MSE): 0.0277

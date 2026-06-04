@@ -18,3 +18,4 @@ pretrained_model_name_or_path: /mnt/d/model/stable-diffusion-v1-5/
 seed: 520
 threshold: 0
 train_data_dir: /mnt/d/dataset/EmoSet/LableSplit_20260529_074548/
+# train_data_dir: /mnt/d/dataset/EmoSet/0103_split_to_folder/
