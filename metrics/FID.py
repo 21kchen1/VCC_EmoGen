@@ -14,7 +14,6 @@ from tqdm import tqdm
 import os
 import numpy as np
 
-
 class ImageFolderDataset(Dataset):
     IMG_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', '.webp']
 
@@ -174,6 +173,8 @@ class FIDRunner:
             img = img.to(self.device)
             fid.update(img, real=real)
 
+# fake_img_root = "runs/test/img/"
+fake_img_root = "runs/Train_150000/img_150000_2"
 
 if __name__ == '__main__':
     # real_img_root = '/mnt/d/data/EmoSet/emotion_scene/amusement'
@@ -186,6 +187,6 @@ if __name__ == '__main__':
     # runner = Runner('/mnt/d/data/EmoSet/emotion_scene/amusement', fake_img_root, device=device)
 
     runner = FIDRunner('/mnt/d/dataset/EmoSet/image/',
-                       'runs/test',
+                       fake_img_root,
                        labels=[])
     runner.run()

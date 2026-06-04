@@ -14,7 +14,6 @@ import pickle
 # import torch.functional as F
 import torch.nn.functional as F
 
-
 @torch.no_grad()
 def count_relate(img, model, processor):
     with open(f'dataset_balance/all_attribute_object_scene.pkl', 'rb') as f:
@@ -300,8 +299,20 @@ def emo_cls(cur_dir, device, weight):
             f.write(f'{Emotion[i]} accuracy:{tmp:.2f}% score:{(Emo_score[i]/Emo_num[i]):.2f} \n')
 
 
-def generate(cur_dir, device,model, num_fc_layers=1, need_LN=False, need_ReLU=False, need_Dropout=False, use_prompt=False):
-    emotion_list = ["amusement", "excitement", "awe", "contentment", "fear", "disgust", "anger", "sadness"]
+def generate(cur_dir, device,model, num_fc_layers=1, need_LN=False, need_ReLU=False, need_Dropout=False, use_prompt=False, use_accel: bool= False):
+    all_emotion_list = ["amusement", "excitement", "awe", "contentment", "fear", "disgust", "anger", "sadness"]
+
+    if use_accel:
+        from accelerate import Accelerator
+        accelerator = Accelerator()
+        world_size = accelerator.num_processes
+        local_rank = accelerator.process_index
+        emotion_list = all_emotion_list[local_rank::world_size]
+        print(f"[Multi-GPU] rank: {local_rank}, process emo list: {emotion_list}")
+    else:
+        emotion_list = all_emotion_list
+        print(f"[Single-GPU] all emotion: {emotion_list}")
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_picture', type=int, default=1000)
     # parser.add_argument('--repo_id', type=str, default="stable-diffusion-v1-5/")
@@ -317,19 +328,35 @@ def generate(cur_dir, device,model, num_fc_layers=1, need_LN=False, need_ReLU=Fa
     parser.add_argument("--use_prompt", type=bool, default=use_prompt)
     parser.add_argument("--seed", type=int, default=None, help="A seed for reproducible training.")
     opt = parser.parse_args()
+
     for emo in emotion_list:
         inference(opt, emo)
 
 
 if __name__ == "__main__":
-    import json
+    import json, argparse
 
     file = [
         "runs/test",
     ]
+
+    #是否启动加速
+    main_parser = argparse.ArgumentParser()
+    main_parser.add_argument("--use_accel", type= bool, default= False, help="Launch accelerate?")
+    args_main = main_parser.parse_args()
+
     # choose which epoch do you want to generate
     # epochs = [0]
-    device = "cuda:0"
+    epochs = []
+
+    # 设置设备
+    if args_main.use_accel:
+        from accelerate import Accelerator
+        accelerator = Accelerator()
+        device = accelerator.device
+    else:
+        accelerator = None
+        device = "cuda:0"
 
     # emotion_classifier's weight
     weight = "weights/Clip_emotion_classifier/time_2023-11-12_03-29-best.pth"
@@ -342,17 +369,21 @@ if __name__ == "__main__":
         params = json.loads(params_json)
         globals().update(params)
         origin = output_dir
-        try:
-            for i in epochs:
-                output_dir = os.path.join(origin, str(i))
 
-                # use_prompt = True
-                # generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout, use_prompt)
-                generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout)
-                emo_cls(output_dir, device, weight)
-        except:
-            output_dir = origin
+        # 加入轮次
+        output_dirs = [os.path.join(origin, str(i)) for i in epochs]
+        output_dirs.append(origin)
+        # for i in epochs:
+        #     output_dir = os.path.join(origin, str(i))
+
+        for output_dir in output_dirs:
             # use_prompt = True
             # generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout, use_prompt)
-            generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout)
-            emo_cls(output_dir, device, weight)
+            generate(output_dir, device, model, num_fc_layers, need_LN, need_ReLU, need_Dropout, use_accel= args_main.use_accl)
+            # 等待所有进程完成
+            if args_main.use_accel and accelerator:
+                accelerator.wait_for_everyone()
+
+            # 只在主进程评估
+            if not args_main.use_accel or (accelerator and accelerator.is_main_process):
+                emo_cls(output_dir, device, weight)

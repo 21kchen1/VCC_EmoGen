@@ -54,3 +54,17 @@ anger accuracy:90.00% score:0.82
 disgust accuracy:70.00% score:0.63
 fear accuracy:100.00% score:0.91
 sadness accuracy:100.00% score:0.92
+
+/ Train_50000_2
+emo_score (8 class): 0.74
+accuracy (8 class): 78.75%
+emo_score (2 class): 0.89
+accuracy (2 class): 90.00%
+amusement accuracy:100.00% score:0.98
+awe accuracy:100.00% score:0.88
+contentment accuracy:40.00% score:0.45
+excitement accuracy:60.00% score:0.50
+anger accuracy:60.00% score:0.55
+disgust accuracy:80.00% score:0.73
+fear accuracy:100.00% score:0.91
+sadness accuracy:90.00% score:0.91

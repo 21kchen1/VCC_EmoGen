@@ -157,10 +157,11 @@ def Semantic_clarity(wkdir, subdir, device):
         f.write(f"Semantic_Clarity_score: {clarity_score:.3f} \n")
 
 if __name__ == "__main__":
-    device = torch.device("cuda:5" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
     num_sample = 10
-    file = "/mnt/d/Emo-generation/DB_5"
-    sub_dir = 'img'
+    # file = "/mnt/d/Emo-generation/DB_5"
+    file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000"
+    sub_dir = 'img_50000'
     Semantic_clarity(file, sub_dir, device)
     Semantic_diversity(file, sub_dir, num_sample, device)
 
