@@ -309,6 +309,7 @@ def emo_cls(cur_dir, device, weight):
         for i in range(8):
             tmp = Emo[i] / Emo_num[i] * 100
             f.write(f'{Emotion[i]} accuracy:{tmp:.2f}% score:{(Emo_score[i]/Emo_num[i]):.2f} \n')
+        f.write('\n')
 
 
 def generate(cur_dir, device,model, num_picture, num_fc_layers=1, need_LN=False, need_ReLU=False, need_Dropout=False, use_prompt=False, use_accel: bool= False):
@@ -350,10 +351,13 @@ if __name__ == "__main__":
 
     file = [
         # "runs/test",
-        "runs/Train_150000",
+        # "runs/Train_150000",
+        "runs/my_test",
     ]
 
     # 每个类别生成的图像数量
+    # num_pic = 2
+    # 评估数量
     num_pic = 1000
 
     # choose which epoch do you want to generate

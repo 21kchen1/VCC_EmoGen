@@ -166,7 +166,8 @@ if __name__ == "__main__":
     num_sample = 10
     # file = "/mnt/d/Emo-generation/DB_5"
     # file = "/mnt/d/code/VCC_EmoGen/runs/test"
-    file = "/mnt/d/code/VCC_EmoGen/runs/Train_150000_best"
+    # file = "/mnt/d/code/VCC_EmoGen/runs/Train_150000_best"
+    file = "/mnt/d/code/VCC_EmoGen/runs/my_test"
     # file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000_best"
     sub_dir = 'img'
     save_file_name = "semantic_metrics.txt"

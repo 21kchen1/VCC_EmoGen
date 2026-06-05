@@ -326,6 +326,7 @@ if __name__ == "__main__":
 
     file = [
         "runs/test",
+        # "runs/test",
     ]
     # choose which epoch do you want to generate
     # epochs = [0]
