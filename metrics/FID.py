@@ -1,3 +1,5 @@
+from typing import Union
+
 import torch
 
 _ = torch.manual_seed(123)
@@ -60,10 +62,11 @@ class FIDRunner:
     def __init__(self,
                  real_img_root,
                  fake_img_root,
+                 device,
                  fid_num_features=2048,
                  labels=[],
                  ):
-        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device(device)
         self.real_img_root = real_img_root
         self.fake_img_root = fake_img_root
         self.fid_num_features = fid_num_features
@@ -128,7 +131,7 @@ class FIDRunner:
 
         return _compute_fid(mean_real.squeeze(0), cov_real, mean_fake.squeeze(0), cov_fake)
 
-    def run(self):
+    def run(self, save_file_name: Union[str, None]= None):
         # update the real imgs
         for label, fid in tqdm(self.real_label2fid.items(), desc='update real imgs'):
             if self._load(label, fid, real=True):
@@ -155,11 +158,23 @@ class FIDRunner:
             self._update(fid, dataloader, real=False)
 
         aggregated_fid = self._init_fid()
-        print('{0}fid{0}'.format('-' * 10))
+
+        fid_infos = ""
+        fid_info = '{0}fid{0}'.format('-' * 10)
+        print(fid_info)
+        fid_infos += fid_info + "\n"
         for label, fid in self.real_label2fid.items():
             self._aggregated(aggregated_fid, fid)
-            print(f'{label}: {fid.compute():.2f}')
-        print(f'aggregated: {self.aggregate_compute(aggregated_fid).detach().item():.2f}')
+            fid_info = f'{label}: {fid.compute():.2f}'
+            print(fid_info)
+            fid_infos += fid_info + "\n"
+        fid_info = f'aggregated: {self.aggregate_compute(aggregated_fid).detach().item():.2f}'
+        print(fid_info)
+        fid_infos += fid_info + "\n"
+
+        if save_file_name:
+            with open(f"{self.fake_img_root}/{save_file_name}", "a", encoding= "utf-8") as f:
+                f.write(fid_infos)
 
     def _aggregated(self, aggregated_fid, fid):
         # aggregated_fid.orig_dtype = fid.orig_dtype
@@ -177,7 +192,10 @@ class FIDRunner:
 
 # fake_img_root = "runs/test/img/"
 fake_img_root = "runs/test/Train_50000_best/img/"
-fake_img_root = "runs/Train_150000/img_150000_2"
+fake_img_root = "runs/Train_150000_best/img_best"
+
+# save_file_name = None
+save_file_name = "FID.txt"
 
 if __name__ == '__main__':
     # real_img_root = '/mnt/d/data/EmoSet/emotion_scene/amusement'
@@ -189,7 +207,10 @@ if __name__ == '__main__':
     # fake_img_root = '/mnt/d/result/ti/emb_emotion'
     # runner = Runner('/mnt/d/data/EmoSet/emotion_scene/amusement', fake_img_root, device=device)
 
+    device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+
     runner = FIDRunner('/mnt/d/dataset/EmoSet/image/',
                        fake_img_root,
+                       device,
                        labels=[])
-    runner.run()
+    runner.run(save_file_name)

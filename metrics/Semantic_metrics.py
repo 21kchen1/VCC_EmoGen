@@ -57,7 +57,7 @@ def DistanceOfCos(img0, img1, model, processor):  # pair_image should be two ima
     return d.item(), mse.item()
 
 
-def Semantic_diversity(wkdir, subdir, num_sample, device):
+def Semantic_diversity(wkdir, subdir, num_sample, device, save_file_name):
     emotion_list = ["amusement","awe","contentment","excitement",
                     "anger","disgust","fear","sadness"]
     images_path = []
@@ -95,7 +95,8 @@ def Semantic_diversity(wkdir, subdir, num_sample, device):
         lpips_score = sum(total_lpips)/num_sample
         mse_score = sum(mse_list)/num_sample
         difference_score = sum(difference_list)/num_sample
-        with open(f"{curdir}/evaluation.txt", "a") as f:
+        # with open(f"{curdir}/evaluation.txt", "a") as f:
+        with open(f"{curdir}/{save_file_name}", "a") as f:
             f.write(f"---------{emotion}------------- \n")
             f.write(f"LPIPS score: {lpips_score:.3f} \n")
             f.write(f"Semantic diversity score (cos): {difference_score:.4f} \n")
@@ -108,7 +109,8 @@ def Semantic_diversity(wkdir, subdir, num_sample, device):
     mse_score = sum(record["mse_score"])/len(record["mse_score"])
     print(f"LPIPS score: {lpips_score:.3f} \n")
     print(f"Semantic diversity score (MSE): {mse_score:.4f} \n")
-    with open(f"{curdir}/evaluation.txt", "a") as f:
+    # with open(f"{curdir}/evaluation.txt", "a") as f:
+    with open(f"{curdir}/{save_file_name}", "a") as f:
         # 在文件末尾追加写入文本内容
         f.write(f"---------Average------------- \n")
         f.write(f"LPIPS score: {lpips_score:.3f} \n")
@@ -117,7 +119,7 @@ def Semantic_diversity(wkdir, subdir, num_sample, device):
 
 
 @torch.no_grad()
-def Semantic_clarity(wkdir, subdir, device):
+def Semantic_clarity(wkdir, subdir, device, save_file_name):
     cur_dir = os.path.join(wkdir, subdir)
     val_dataset = EmoDataset(cur_dir)
     val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=64, shuffle=False, pin_memory=True)
@@ -154,7 +156,8 @@ def Semantic_clarity(wkdir, subdir, device):
             pred_list.append(big_scene[i].cpu().item() if big_scene[i] > big_object[i] else big_object[i].cpu().item())
     clarity_score = sum(pred_list)/len(pred_list)
     print(f"Semantic_Clarity_score: {clarity_score:.3f} \n")
-    with open(f"{cur_dir}/evaluation.txt", "a") as f:
+    # with open(f"{cur_dir}/semantic_metrics.txt", "a") as f:
+    with open(f"{cur_dir}/{save_file_name}", "a") as f:
         # 在文件末尾追加写入文本内容
         f.write(f"Semantic_Clarity_score: {clarity_score:.3f} \n")
 
@@ -163,9 +166,10 @@ if __name__ == "__main__":
     num_sample = 10
     # file = "/mnt/d/Emo-generation/DB_5"
     # file = "/mnt/d/code/VCC_EmoGen/runs/test"
-    # file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000"
-    file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000_best"
+    file = "/mnt/d/code/VCC_EmoGen/runs/Train_150000_best"
+    # file = "/mnt/d/code/VCC_EmoGen/runs/Train_50000_best"
     sub_dir = 'img'
-    Semantic_clarity(file, sub_dir, device)
-    Semantic_diversity(file, sub_dir, num_sample, device)
+    save_file_name = "semantic_metrics.txt"
+    Semantic_clarity(file, sub_dir, device, save_file_name)
+    Semantic_diversity(file, sub_dir, num_sample, device, save_file_name)
 

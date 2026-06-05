@@ -350,7 +350,7 @@ if __name__ == "__main__":
 
     file = [
         # "runs/test",
-        "runs/test",
+        "runs/Train_150000",
     ]
 
     # 每个类别生成的图像数量

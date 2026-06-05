@@ -41,4 +41,31 @@ disgust accuracy:85.00% score:0.80
 fear accuracy:100.00% score:0.89
 sadness accuracy:95.00% score:0.87
 
-/ 1000 张分类
+/ 1000 张分类 EMO-A
+emo_score (8 class): 0.73
+accuracy (8 class): 81.78%
+emo_score (2 class): 0.91
+accuracy (2 class): 94.95%
+amusement accuracy:97.25% score:0.90
+awe accuracy:81.18% score:0.66
+contentment accuracy:76.08% score:0.57
+excitement accuracy:32.75% score:0.34
+anger accuracy:92.84% score:0.84
+disgust accuracy:77.75% score:0.70
+fear accuracy:98.53% score:0.95
+sadness accuracy:97.84% score:0.91
+
+----------fid----------
+amusement: 97.11
+anger: 86.26
+awe: 85.64
+contentment: 99.04
+disgust: 123.60
+excitement: 96.69
+fear: 91.91
+sadness: 167.04
+aggregated: 41.47
+
+Semantic_Clarity_score: 0.621
+LPIPS score: 0.720
+Semantic diversity score (MSE): 0.0255
