@@ -191,8 +191,8 @@ class FIDRunner:
             fid.update(img, real=real)
 
 # fake_img_root = "runs/test/img/"
-fake_img_root = "runs/test/Train_50000_best/img/"
-fake_img_root = "runs/Train_150000_best/img_best"
+# fake_img_root = "runs/Train_50000_best/img/"
+# fake_img_root = "runs/Train_150000_best/img_best"
 fake_img_root = "runs/my_test/img"
 
 # save_file_name = None

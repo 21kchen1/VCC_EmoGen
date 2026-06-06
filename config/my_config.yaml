@@ -26,15 +26,21 @@ train_data_dir: /mnt/d/dataset/EmoSet/LableSplit_20260529_074548/
 fe_use: true
 
 # Feature engineering loss weights.
-fe_color_rate: 0.03      # RGB soft histogram + color moments
-fe_hog_rate: 0.02        # HOG/Sobel gradient orientation histogram
-fe_dct_rate: 0.01        # low-frequency 2D DCT
+# fe_color_rate: 0.03      # RGB soft histogram + color moments
+# fe_hog_rate: 0.02        # HOG/Sobel gradient orientation histogram
+# fe_dct_rate: 0.01        # low-frequency 2D DCT
+fe_color_rate: 0.3      # RGB soft histogram + color moments
+fe_hog_rate: 0.2        # HOG/Sobel gradient orientation histogram
+fe_dct_rate: 0.1        # low-frequency 2D DCT
 
 # PCA-whitened attribute loss.
-fe_pca_dim: 256
-fe_pca_mix: 0.35
-fe_pca_temperature: 10.0
+# fe_pca_dim: 256
+# fe_pca_mix: 0.35
+# fe_pca_temperature: 10.0
+fe_pca_dim: 0
+fe_pca_mix: 0.0
+fe_pca_temperature: 0.0
 
 # Runtime control.
-fe_decode_every: 1       # set 2/4/8 if VRAM is tight
-fe_warmup_steps: 0       # set 500~1000 if early training is unstable
+fe_decode_every: 1       # 每 xx 步激活一次特征工程
+fe_warmup_steps: 20000       # 第 xx 步后启动特征工程

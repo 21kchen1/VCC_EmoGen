@@ -1,0 +1,75 @@
+Semantic_Clarity_score: 0.655
+---------amusement-------------
+LPIPS score: 0.728
+Semantic diversity score (cos): 0.0162
+Semantic diversity score (MSE): 0.0210
+---------awe-------------
+LPIPS score: 0.734
+Semantic diversity score (cos): 0.0170
+Semantic diversity score (MSE): 0.0224
+---------contentment-------------
+LPIPS score: 0.776
+Semantic diversity score (cos): 0.0247
+Semantic diversity score (MSE): 0.0316
+---------excitement-------------
+LPIPS score: 0.749
+Semantic diversity score (cos): 0.0214
+Semantic diversity score (MSE): 0.0277
+---------anger-------------
+LPIPS score: 0.785
+Semantic diversity score (cos): 0.0203
+Semantic diversity score (MSE): 0.0260
+---------disgust-------------
+LPIPS score: 0.734
+Semantic diversity score (cos): 0.0205
+Semantic diversity score (MSE): 0.0267
+---------fear-------------
+LPIPS score: 0.719
+Semantic diversity score (cos): 0.0228
+Semantic diversity score (MSE): 0.0293
+---------sadness-------------
+LPIPS score: 0.746
+Semantic diversity score (cos): 0.0273
+Semantic diversity score (MSE): 0.0350
+---------Average-------------
+LPIPS score: 0.746
+Semantic diversity score (cos): 0.0213
+Semantic diversity score (MSE): 0.0275
+
+Semantic_Clarity_score: 0.655
+---------amusement-------------
+LPIPS score: 0.730
+Semantic diversity score (cos): 0.0140
+Semantic diversity score (MSE): 0.0183
+---------awe-------------
+LPIPS score: 0.748
+Semantic diversity score (cos): 0.0141
+Semantic diversity score (MSE): 0.0181
+---------contentment-------------
+LPIPS score: 0.764
+Semantic diversity score (cos): 0.0241
+Semantic diversity score (MSE): 0.0314
+---------excitement-------------
+LPIPS score: 0.771
+Semantic diversity score (cos): 0.0224
+Semantic diversity score (MSE): 0.0287
+---------anger-------------
+LPIPS score: 0.764
+Semantic diversity score (cos): 0.0220
+Semantic diversity score (MSE): 0.0284
+---------disgust-------------
+LPIPS score: 0.726
+Semantic diversity score (cos): 0.0098
+Semantic diversity score (MSE): 0.0126
+---------fear-------------
+LPIPS score: 0.753
+Semantic diversity score (cos): 0.0207
+Semantic diversity score (MSE): 0.0268
+---------sadness-------------
+LPIPS score: 0.728
+Semantic diversity score (cos): 0.0167
+Semantic diversity score (MSE): 0.0214
+---------Average-------------
+LPIPS score: 0.748
+Semantic diversity score (cos): 0.0180
+Semantic diversity score (MSE): 0.0232

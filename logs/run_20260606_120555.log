@@ -1,0 +1,241 @@
+=== 开始训练 ===
+usage: main_fe.py [-h] [--save_steps SAVE_STEPS] [--model MODEL]
+                  [--threshold THRESHOLD] [--num_fc_layers NUM_FC_LAYERS]
+                  [--attr_rate ATTR_RATE] [--emo_rate EMO_RATE]
+                  [--need_LN NEED_LN] [--need_ReLU NEED_RELU]
+                  [--need_Dropout NEED_DROPOUT] [--save_as_full_pipeline]
+                  [--num_vectors NUM_VECTORS]
+                  [--pretrained_model_name_or_path PRETRAINED_MODEL_NAME_OR_PATH]
+                  [--emotion EMOTION] [--revision REVISION]
+                  [--tokenizer_name TOKENIZER_NAME]
+                  [--train_data_dir TRAIN_DATA_DIR]
+                  [--placeholder_token PLACEHOLDER_TOKEN]
+                  [--initializer_token INITIALIZER_TOKEN]
+                  [--learnable_property LEARNABLE_PROPERTY]
+                  [--repeats REPEATS] [--output_dir OUTPUT_DIR] [--seed SEED]
+                  [--resolution RESOLUTION] [--center_crop]
+                  [--train_batch_size TRAIN_BATCH_SIZE]
+                  [--num_train_epochs NUM_TRAIN_EPOCHS]
+                  [--max_train_steps MAX_TRAIN_STEPS]
+                  [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                  [--gradient_checkpointing] [--learning_rate LEARNING_RATE]
+                  [--scale_lr] [--lr_scheduler LR_SCHEDULER]
+                  [--lr_warmup_steps LR_WARMUP_STEPS]
+                  [--lr_num_cycles LR_NUM_CYCLES]
+                  [--dataloader_num_workers DATALOADER_NUM_WORKERS]
+                  [--adam_beta1 ADAM_BETA1] [--adam_beta2 ADAM_BETA2]
+                  [--adam_weight_decay ADAM_WEIGHT_DECAY]
+                  [--adam_epsilon ADAM_EPSILON] [--push_to_hub]
+                  [--hub_token HUB_TOKEN] [--hub_model_id HUB_MODEL_ID]
+                  [--logging_dir LOGGING_DIR]
+                  [--mixed_precision {no,fp16,bf16}] [--allow_tf32]
+                  [--report_to REPORT_TO]
+                  [--validation_prompt VALIDATION_PROMPT]
+                  [--num_validation_images NUM_VALIDATION_IMAGES]
+                  [--validation_steps VALIDATION_STEPS]
+                  [--validation_epochs VALIDATION_EPOCHS]
+                  [--local_rank LOCAL_RANK]
+                  [--checkpointing_steps CHECKPOINTING_STEPS]
+                  [--checkpoints_total_limit CHECKPOINTS_TOTAL_LIMIT]
+                  [--resume_from_checkpoint RESUME_FROM_CHECKPOINT]
+                  [--enable_xformers_memory_efficient_attention]
+                  [--fe_use FE_USE] [--fe_color_rate FE_COLOR_RATE]
+                  [--fe_hog_rate FE_HOG_RATE] [--fe_dct_rate FE_DCT_RATE]
+                  [--fe_pca_dim FE_PCA_DIM] [--fe_pca_mix FE_PCA_MIX]
+                  [--fe_pca_temperature FE_PCA_TEMPERATURE]
+                  [--fe_decode_every FE_DECODE_EVERY]
+                  [--fe_warmup_steps FE_WARMUP_STEPS]
+main_fe.py: error: argument --fe_pca_dim: invalid int value: 'None'
+usage: main_fe.py [-h] [--save_steps SAVE_STEPS] [--model MODEL]
+                  [--threshold THRESHOLD] [--num_fc_layers NUM_FC_LAYERS]
+                  [--attr_rate ATTR_RATE] [--emo_rate EMO_RATE]
+                  [--need_LN NEED_LN] [--need_ReLU NEED_RELU]
+                  [--need_Dropout NEED_DROPOUT] [--save_as_full_pipeline]
+                  [--num_vectors NUM_VECTORS]
+                  [--pretrained_model_name_or_path PRETRAINED_MODEL_NAME_OR_PATH]
+                  [--emotion EMOTION] [--revision REVISION]
+                  [--tokenizer_name TOKENIZER_NAME]
+                  [--train_data_dir TRAIN_DATA_DIR]
+                  [--placeholder_token PLACEHOLDER_TOKEN]
+                  [--initializer_token INITIALIZER_TOKEN]
+                  [--learnable_property LEARNABLE_PROPERTY]
+                  [--repeats REPEATS] [--output_dir OUTPUT_DIR] [--seed SEED]
+                  [--resolution RESOLUTION] [--center_crop]
+                  [--train_batch_size TRAIN_BATCH_SIZE]
+                  [--num_train_epochs NUM_TRAIN_EPOCHS]
+                  [--max_train_steps MAX_TRAIN_STEPS]
+                  [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                  [--gradient_checkpointing] [--learning_rate LEARNING_RATE]
+                  [--scale_lr] [--lr_scheduler LR_SCHEDULER]
+                  [--lr_warmup_steps LR_WARMUP_STEPS]
+                  [--lr_num_cycles LR_NUM_CYCLES]
+                  [--dataloader_num_workers DATALOADER_NUM_WORKERS]
+                  [--adam_beta1 ADAM_BETA1] [--adam_beta2 ADAM_BETA2]
+                  [--adam_weight_decay ADAM_WEIGHT_DECAY]
+                  [--adam_epsilon ADAM_EPSILON] [--push_to_hub]
+                  [--hub_token HUB_TOKEN] [--hub_model_id HUB_MODEL_ID]
+                  [--logging_dir LOGGING_DIR]
+                  [--mixed_precision {no,fp16,bf16}] [--allow_tf32]
+                  [--report_to REPORT_TO]
+                  [--validation_prompt VALIDATION_PROMPT]
+                  [--num_validation_images NUM_VALIDATION_IMAGES]
+                  [--validation_steps VALIDATION_STEPS]
+                  [--validation_epochs VALIDATION_EPOCHS]
+                  [--local_rank LOCAL_RANK]
+                  [--checkpointing_steps CHECKPOINTING_STEPS]
+                  [--checkpoints_total_limit CHECKPOINTS_TOTAL_LIMIT]
+                  [--resume_from_checkpoint RESUME_FROM_CHECKPOINT]
+                  [--enable_xformers_memory_efficient_attention]
+                  [--fe_use FE_USE] [--fe_color_rate FE_COLOR_RATE]
+                  [--fe_hog_rate FE_HOG_RATE] [--fe_dct_rate FE_DCT_RATE]
+                  [--fe_pca_dim FE_PCA_DIM] [--fe_pca_mix FE_PCA_MIX]
+                  [--fe_pca_temperature FE_PCA_TEMPERATURE]
+                  [--fe_decode_every FE_DECODE_EVERY]
+                  [--fe_warmup_steps FE_WARMUP_STEPS]
+main_fe.py: error: argument --fe_pca_dim: invalid int value: 'None'
+usage: main_fe.py [-h] [--save_steps SAVE_STEPS] [--model MODEL]
+                  [--threshold THRESHOLD] [--num_fc_layers NUM_FC_LAYERS]
+                  [--attr_rate ATTR_RATE] [--emo_rate EMO_RATE]
+                  [--need_LN NEED_LN] [--need_ReLU NEED_RELU]
+                  [--need_Dropout NEED_DROPOUT] [--save_as_full_pipeline]
+                  [--num_vectors NUM_VECTORS]
+                  [--pretrained_model_name_or_path PRETRAINED_MODEL_NAME_OR_PATH]
+                  [--emotion EMOTION] [--revision REVISION]
+                  [--tokenizer_name TOKENIZER_NAME]
+                  [--train_data_dir TRAIN_DATA_DIR]
+                  [--placeholder_token PLACEHOLDER_TOKEN]
+                  [--initializer_token INITIALIZER_TOKEN]
+                  [--learnable_property LEARNABLE_PROPERTY]
+                  [--repeats REPEATS] [--output_dir OUTPUT_DIR] [--seed SEED]
+                  [--resolution RESOLUTION] [--center_crop]
+                  [--train_batch_size TRAIN_BATCH_SIZE]
+                  [--num_train_epochs NUM_TRAIN_EPOCHS]
+                  [--max_train_steps MAX_TRAIN_STEPS]
+                  [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                  [--gradient_checkpointing] [--learning_rate LEARNING_RATE]
+                  [--scale_lr] [--lr_scheduler LR_SCHEDULER]
+                  [--lr_warmup_steps LR_WARMUP_STEPS]
+                  [--lr_num_cycles LR_NUM_CYCLES]
+                  [--dataloader_num_workers DATALOADER_NUM_WORKERS]
+                  [--adam_beta1 ADAM_BETA1] [--adam_beta2 ADAM_BETA2]
+                  [--adam_weight_decay ADAM_WEIGHT_DECAY]
+                  [--adam_epsilon ADAM_EPSILON] [--push_to_hub]
+                  [--hub_token HUB_TOKEN] [--hub_model_id HUB_MODEL_ID]
+                  [--logging_dir LOGGING_DIR]
+                  [--mixed_precision {no,fp16,bf16}] [--allow_tf32]
+                  [--report_to REPORT_TO]
+                  [--validation_prompt VALIDATION_PROMPT]
+                  [--num_validation_images NUM_VALIDATION_IMAGES]
+                  [--validation_steps VALIDATION_STEPS]
+                  [--validation_epochs VALIDATION_EPOCHS]
+                  [--local_rank LOCAL_RANK]
+                  [--checkpointing_steps CHECKPOINTING_STEPS]
+                  [--checkpoints_total_limit CHECKPOINTS_TOTAL_LIMIT]
+                  [--resume_from_checkpoint RESUME_FROM_CHECKPOINT]
+                  [--enable_xformers_memory_efficient_attention]
+                  [--fe_use FE_USE] [--fe_color_rate FE_COLOR_RATE]
+                  [--fe_hog_rate FE_HOG_RATE] [--fe_dct_rate FE_DCT_RATE]
+                  [--fe_pca_dim FE_PCA_DIM] [--fe_pca_mix FE_PCA_MIX]
+                  [--fe_pca_temperature FE_PCA_TEMPERATURE]
+                  [--fe_decode_every FE_DECODE_EVERY]
+                  [--fe_warmup_steps FE_WARMUP_STEPS]
+main_fe.py: error: argument --fe_pca_dim: invalid int value: 'None'
+usage: main_fe.py [-h] [--save_steps SAVE_STEPS] [--model MODEL]
+                  [--threshold THRESHOLD] [--num_fc_layers NUM_FC_LAYERS]
+                  [--attr_rate ATTR_RATE] [--emo_rate EMO_RATE]
+                  [--need_LN NEED_LN] [--need_ReLU NEED_RELU]
+                  [--need_Dropout NEED_DROPOUT] [--save_as_full_pipeline]
+                  [--num_vectors NUM_VECTORS]
+                  [--pretrained_model_name_or_path PRETRAINED_MODEL_NAME_OR_PATH]
+                  [--emotion EMOTION] [--revision REVISION]
+                  [--tokenizer_name TOKENIZER_NAME]
+                  [--train_data_dir TRAIN_DATA_DIR]
+                  [--placeholder_token PLACEHOLDER_TOKEN]
+                  [--initializer_token INITIALIZER_TOKEN]
+                  [--learnable_property LEARNABLE_PROPERTY]
+                  [--repeats REPEATS] [--output_dir OUTPUT_DIR] [--seed SEED]
+                  [--resolution RESOLUTION] [--center_crop]
+                  [--train_batch_size TRAIN_BATCH_SIZE]
+                  [--num_train_epochs NUM_TRAIN_EPOCHS]
+                  [--max_train_steps MAX_TRAIN_STEPS]
+                  [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+                  [--gradient_checkpointing] [--learning_rate LEARNING_RATE]
+                  [--scale_lr] [--lr_scheduler LR_SCHEDULER]
+                  [--lr_warmup_steps LR_WARMUP_STEPS]
+                  [--lr_num_cycles LR_NUM_CYCLES]
+                  [--dataloader_num_workers DATALOADER_NUM_WORKERS]
+                  [--adam_beta1 ADAM_BETA1] [--adam_beta2 ADAM_BETA2]
+                  [--adam_weight_decay ADAM_WEIGHT_DECAY]
+                  [--adam_epsilon ADAM_EPSILON] [--push_to_hub]
+                  [--hub_token HUB_TOKEN] [--hub_model_id HUB_MODEL_ID]
+                  [--logging_dir LOGGING_DIR]
+                  [--mixed_precision {no,fp16,bf16}] [--allow_tf32]
+                  [--report_to REPORT_TO]
+                  [--validation_prompt VALIDATION_PROMPT]
+                  [--num_validation_images NUM_VALIDATION_IMAGES]
+                  [--validation_steps VALIDATION_STEPS]
+                  [--validation_epochs VALIDATION_EPOCHS]
+                  [--local_rank LOCAL_RANK]
+                  [--checkpointing_steps CHECKPOINTING_STEPS]
+                  [--checkpoints_total_limit CHECKPOINTS_TOTAL_LIMIT]
+                  [--resume_from_checkpoint RESUME_FROM_CHECKPOINT]
+                  [--enable_xformers_memory_efficient_attention]
+                  [--fe_use FE_USE] [--fe_color_rate FE_COLOR_RATE]
+                  [--fe_hog_rate FE_HOG_RATE] [--fe_dct_rate FE_DCT_RATE]
+                  [--fe_pca_dim FE_PCA_DIM] [--fe_pca_mix FE_PCA_MIX]
+                  [--fe_pca_temperature FE_PCA_TEMPERATURE]
+                  [--fe_decode_every FE_DECODE_EVERY]
+                  [--fe_warmup_steps FE_WARMUP_STEPS]
+main_fe.py: error: argument --fe_pca_dim: invalid int value: 'None'
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 2) local_rank: 0 (pid: 3089259) of binary: /opt/minconda/miniconda3/envs/py39/bin/python
+Traceback (most recent call last):
+  File "/opt/minconda/miniconda3/envs/py39/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+  File "/opt/minconda/miniconda3/envs/py39/lib/python3.9/site-packages/accelerate/commands/accelerate_cli.py", line 47, in main
+    args.func(args)
+  File "/opt/minconda/miniconda3/envs/py39/lib/python3.9/site-packages/accelerate/commands/launch.py", line 977, in launch_command
+    multi_gpu_launcher(args)
+  File "/opt/minconda/miniconda3/envs/py39/lib/python3.9/site-packages/accelerate/commands/launch.py", line 646, in multi_gpu_launcher
+    distrib_run.run(args)
+  File "/opt/minconda/miniconda3/envs/py39/lib/python3.9/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/opt/minconda/miniconda3/envs/py39/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/opt/minconda/miniconda3/envs/py39/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+training/main_fe.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2026-06-06_12:06:04
+  host      : chenkai-157-157
+  rank      : 1 (local_rank: 1)
+  exitcode  : 2 (pid: 3089260)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2026-06-06_12:06:04
+  host      : chenkai-157-157
+  rank      : 2 (local_rank: 2)
+  exitcode  : 2 (pid: 3089261)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2026-06-06_12:06:04
+  host      : chenkai-157-157
+  rank      : 3 (local_rank: 3)
+  exitcode  : 2 (pid: 3089262)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-06-06_12:06:04
+  host      : chenkai-157-157
+  rank      : 0 (local_rank: 0)
+  exitcode  : 2 (pid: 3089259)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

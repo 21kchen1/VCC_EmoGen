@@ -24,5 +24,7 @@ sadness: 161.64
 aggregated: 50.11
 
 Semantic_Clarity_score: 0.655
-LPIPS score: 0.732 
+LPIPS score: 0.732
 Semantic diversity score (MSE): 0.0277
+
+

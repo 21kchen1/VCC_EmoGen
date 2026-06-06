@@ -23,19 +23,25 @@ import torch.nn.functional as F
 
 
 def _to_01(x: torch.Tensor) -> torch.Tensor:
-    """Convert image tensor from [-1, 1] or [0, 1] to [0, 1]."""
+    """
+    将数值范围为 [-1, 1] 和 [0, 1] 的张量统一转换为 [0, 1]
+    """
     if x.min().detach() < -0.05:
         x = (x + 1.0) / 2.0
     return x.clamp(0.0, 1.0)
 
 
 def _rgb_to_gray(x: torch.Tensor) -> torch.Tensor:
-    """x: Bx3xHxW in [0,1], returns Bx1xHxW."""
+    """
+    RGB 转换为灰亮度公式
+    """
     return 0.2989 * x[:, 0:1] + 0.5870 * x[:, 1:2] + 0.1140 * x[:, 2:3]
 
 
 def _dct_matrix(n: int, device: torch.device, dtype: torch.dtype) -> torch.Tensor:
-    """Create orthonormal DCT-II transform matrix of size n x n."""
+    """
+    创建大小为 n x n 的 DCT-II 正交变换矩阵
+    """
     k = torch.arange(n, device=device, dtype=dtype).unsqueeze(1)
     i = torch.arange(n, device=device, dtype=dtype).unsqueeze(0)
     mat = torch.cos(math.pi / n * (i + 0.5) * k)
@@ -65,6 +71,20 @@ class FeatureEngineeringLoss(nn.Module):
         dct_keep: int = 16,
         eps: float = 1e-6,
     ) -> None:
+        """
+        权重参数初始化
+
+        Args:
+            color_weight (float, optional): . Defaults to 0.03.
+            hog_weight (float, optional): . Defaults to 0.02.
+            dct_weight (float, optional): . Defaults to 0.01.
+            hist_bins (int, optional): 颜色直方图分箱数量. Defaults to 16.
+            hog_bins (int, optional): _description_. Defaults to 9.
+            feature_size (int, optional): _description_. Defaults to 128.
+            dct_size (int, optional): _description_. Defaults to 64.
+            dct_keep (int, optional): _description_. Defaults to 16.
+            eps (float, optional): 误差. Defaults to 1e-6.
+        """
         super().__init__()
         self.color_weight = float(color_weight)
         self.hog_weight = float(hog_weight)
@@ -90,15 +110,29 @@ class FeatureEngineeringLoss(nn.Module):
         self.register_buffer("sobel_y", sobel_y)
 
     def color_histogram(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        加权颜色频率直方图
+
+        Args:
+            x (torch.Tensor): pred_img (vae decode noise) and target_img
+
+        Returns:
+            torch.Tensor: 直方图 B, C*K
+        """
         x = _to_01(x.float())
+        # 统一特征分辨率
         x = F.interpolate(x, size=(self.feature_size, self.feature_size), mode="bilinear", align_corners=False)
         b, c, h, w = x.shape
-        values = x.flatten(2)  # B,C,N
+        # B,C,N(h*w)
+        values = x.flatten(2)
 
+        # 在 [0, 1] 均匀生成 self.hist_bins 个中心点
         centers = torch.linspace(0.0, 1.0, self.hist_bins, device=x.device, dtype=x.dtype)
+        # bin 区间宽度
         width = 1.0 / max(self.hist_bins - 1, 1)
-        # Soft triangular bins: B,C,N,K
+        # Soft triangular bins: B,C,N,K 计算像素值与每个 bin 中心的归一化距离，距离越小 -> 0 权重越大 -> 1
         weights = torch.relu(1.0 - torch.abs(values.unsqueeze(-1) - centers) / (width + self.eps))
+        # B,C,N,K -> B,C,K
         hist = weights.sum(dim=2)
         hist = hist / (hist.sum(dim=-1, keepdim=True) + self.eps)
         return hist.flatten(1)  # B, C*K

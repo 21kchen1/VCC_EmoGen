@@ -16,11 +16,10 @@ echo "=== 训练完成，开始推理 ===" | tee -a $LOG_FILE
 accelerate launch training/accelerate_inference.py 2>&1 | tee -a $LOG_FILE
 
 
-echo "=== 推理完成，开始评估 ===" | tee -a $LOG_FILE
-python metrics/FID.py 2>&1 | tee -a $LOG_FILE &
-PID_A=$!
-python metrics/Semantic_metrics.py 2>&1 | tee -a $LOG_FILE &
-PID_B=$!
+echo "=== 推理完成，开始评估 FID ===" | tee -a $LOG_FILE
+python metrics/FID.py 2>&1 | tee -a $LOG_FILE
 
-wait $PID_A $PID_B
+echo "=== 推理完成，开始评估 SEM ===" | tee -a $LOG_FILE
+python metrics/Semantic_metrics.py 2>&1 | tee -a $LOG_FILE
+
 echo "=== 全部任务完成 ===" | tee -a $LOG_FILE

@@ -51,7 +51,7 @@ def parse_args(pretrained_model_name_or_path, emotion, train_data_dir, learnable
                num_train_epochs, attr_rate, threshold, seed, emo_rate,
                learning_rate, output_dir, model, num_fc_layers, need_LN=False, need_ReLU=False, need_Dropout=False,
                fe_use=True, fe_color_rate=0.03, fe_hog_rate=0.02, fe_dct_rate=0.01,
-               fe_pca_dim=256, fe_pca_mix=0.35, fe_pca_temperature=10.0,
+               fe_pca_dim=0, fe_pca_mix=0.0, fe_pca_temperature=0.0,
                fe_decode_every=1, fe_warmup_steps=0):
     parser = argparse.ArgumentParser(description="Simple example of a training script.")
     parser.add_argument(
@@ -900,6 +900,9 @@ def main(args):
                                 pca_projector,
                                 temperature=args.fe_pca_temperature,
                             )
+                            print(loss_attr_pca)
+
+                            # mix
                             loss_attr = (1.0 - args.fe_pca_mix) * loss_attr + args.fe_pca_mix * loss_attr_pca
                         else:
                             loss_attr_pca = torch.zeros((), device=loss_attr.device, dtype=loss_attr.dtype)
@@ -941,11 +944,18 @@ def main(args):
 
                     # assume that distance under threshold is the same object
                     loss_forward = (
-                        (1 - attr_rate) * loss_reconstruction
+                        (1 - attr_rate) * (loss_reconstruction + loss_fe)
                         + args.attr_rate * attr_rate * loss_attr
                         + args.emo_rate * loss_emo
-                        + loss_fe
                     )
+
+                    # 第一版，可能数值过大，导致 loss_fe 作为主导，情感空间失效
+                    # loss_forward = (
+                    #     (1 - attr_rate) * (loss_reconstruction)
+                    #     + args.attr_rate * attr_rate * loss_attr
+                    #     + args.emo_rate * loss_emo
+                    #     + loss_fe
+                    # )
 
                     accelerator.backward(loss_forward)
                     grad_pseudo = text_encoder.module.get_input_embeddings().weight.grad[-1].detach().unsqueeze(0)
