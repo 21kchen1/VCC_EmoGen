@@ -4,7 +4,7 @@ emotion: all
 learnable_property: ["object","scene"]
 learning_rate: 0.001
 # max_train_steps: 100
-max_train_steps: 100000
+max_train_steps: 150000
 model: MLP
 need_Dropout: false
 need_LN: false
@@ -29,9 +29,9 @@ fe_use: true
 # fe_color_rate: 0.03      # RGB soft histogram + color moments
 # fe_hog_rate: 0.02        # HOG/Sobel gradient orientation histogram
 # fe_dct_rate: 0.01        # low-frequency 2D DCT
-fe_color_rate: 0.3      # RGB soft histogram + color moments
-fe_hog_rate: 0.2        # HOG/Sobel gradient orientation histogram
-fe_dct_rate: 0.1        # low-frequency 2D DCT
+fe_color_rate: 0.6      # RGB soft histogram + color moments
+fe_hog_rate: 0.4        # HOG/Sobel gradient orientation histogram
+fe_dct_rate: 0.2        # low-frequency 2D DCT
 
 # PCA-whitened attribute loss.
 # fe_pca_dim: 256
@@ -42,5 +42,5 @@ fe_pca_mix: 0.0
 fe_pca_temperature: 0.0
 
 # Runtime control.
-fe_decode_every: 1       # 每 xx 步激活一次特征工程
-fe_warmup_steps: 20000       # 第 xx 步后启动特征工程
+fe_decode_every: 2       # 每 xx 步激活一次特征工程
+fe_warmup_steps: 30000       # 第 xx 步后启动特征工程

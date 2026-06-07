@@ -54,3 +54,6 @@ fe_pca_temperature: 10.0
 fe_decode_every: 1       # set 2/4/8 if VRAM is tight
 fe_warmup_steps: 0       # set 500~1000 if early training is unstable
 ```
+
+## 第二次
+100000 次训练，关闭 PCA 语义映射支持，FID 下降 1，其余不足，需要提升训练量

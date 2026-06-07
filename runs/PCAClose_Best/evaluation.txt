@@ -1,0 +1,13 @@
+emo_score (8 class): 0.69
+accuracy (8 class): 79.45%
+emo_score (2 class): 0.88
+accuracy (2 class): 93.21%
+amusement accuracy:97.30% score:0.89 
+awe accuracy:88.10% score:0.75 
+contentment accuracy:86.00% score:0.64 
+excitement accuracy:54.50% score:0.48 
+anger accuracy:49.60% score:0.39 
+disgust accuracy:73.40% score:0.65 
+fear accuracy:91.30% score:0.83 
+sadness accuracy:95.40% score:0.87 
+
