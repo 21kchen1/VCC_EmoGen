@@ -69,3 +69,8 @@ aggregated: 41.47
 Semantic_Clarity_score: 0.621
 LPIPS score: 0.720
 Semantic diversity score (MSE): 0.0255
+
+Semantic_Clarity_score: 0.621
+LPIPS score: 0.734
+Semantic diversity score (cos): 0.0221
+Semantic diversity score (MSE): 0.0283

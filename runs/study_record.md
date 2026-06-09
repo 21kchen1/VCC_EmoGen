@@ -57,3 +57,6 @@ fe_warmup_steps: 0       # set 500~1000 if early training is unstable
 
 ## 第二次
 100000 次训练，关闭 PCA 语义映射支持，FID 下降 1，其余不足，需要提升训练量
+
+## 第三次
+150000 次训练，关闭 PCA 语义，视觉特征增强 (0.6,0.4,0.2)，情感物体错误，emo_loss 明显提示 1.5 -> 2.5
