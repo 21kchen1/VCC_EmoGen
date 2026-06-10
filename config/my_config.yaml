@@ -31,7 +31,17 @@ fe_use: true
 # fe_dct_rate: 0.01        # low-frequency 2D DCT
 fe_color_rate: 0.3      # RGB soft histogram + color moments
 fe_hog_rate: 0.2        # HOG/Sobel gradient orientation histogram
-fe_dct_rate: 0.1        # low-frequency 2D DCT
+# fe_dct_rate: 0.1        # low-frequency 2D DCT
+fe_dct_rate: 0.0        # low-frequency 2D DCT
+
+fe_size: 128            # 特征大小
+# fe_size: 256            # 特征大小
+fe_color_bins: 16       # 颜色分箱数
+fe_hog_bins: 9          # 角度分箱数
+fe_dct_size: 64        # dct 输入大小
+# fe_dct_size: 128        # dct 输入大小
+fe_dct_keep: 16         # dct 输出大小
+# fe_dct_keep: 64         # dct 输出大小
 
 # PCA-whitened attribute loss.
 # fe_pca_dim: 256

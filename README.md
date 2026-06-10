@@ -175,3 +175,13 @@ clip: https://huggingface.co/openai/clip-vit-large-patch14?library=transformers
 5. accelerate 设置为当前硬件规格
 6. 执行 accelerate launch training\main.py
 7. inference 提供了按 epochs 生成图像的功能。需要根据训练时使用的 epochs，设置 inference 中 epochs = [0] 的值，需要查看 runs/test 中，你的训练轮次会不会产生 epochs 文件夹，比如 runs/test/0, runs/test/1，只有训练的 epochs 较大时才会出现上述文件夹，如果没有，则直接注释 inference 中 epochs = [0]。
+
+8. 查看训练过程
+> 服务器
+```
+tensorboard --logdir=runs/my_test/Emotion_generation/ --port=6006 --host=localhost
+```
+> 主机
+```
+ssh -L 6006:127.0.0.1:6006 USER@IP -p PORT
+```

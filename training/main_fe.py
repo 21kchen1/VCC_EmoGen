@@ -51,6 +51,7 @@ def parse_args(pretrained_model_name_or_path, emotion, train_data_dir, learnable
                num_train_epochs, attr_rate, threshold, seed, emo_rate,
                learning_rate, output_dir, model, num_fc_layers, need_LN=False, need_ReLU=False, need_Dropout=False,
                fe_use=True, fe_color_rate=0.03, fe_hog_rate=0.02, fe_dct_rate=0.01,
+               fe_size = 128, fe_color_bins = 16, fe_hog_bins = 9, fe_dct_size = 64, fe_dct_keep = 16,
                fe_pca_dim=0, fe_pca_mix=0.0, fe_pca_temperature=0.0,
                fe_decode_every=1, fe_warmup_steps=0):
     parser = argparse.ArgumentParser(description="Simple example of a training script.")
@@ -344,7 +345,7 @@ def parse_args(pretrained_model_name_or_path, emotion, train_data_dir, learnable
         help="Whether or not to use xformers."
     )
 
-    # Feature engineering regularizers.
+    # 特征工程参数注入
     parser.add_argument("--fe_use", type=bool, default=fe_use,
                         help="Enable differentiable feature-engineering losses.")
     parser.add_argument("--fe_color_rate", type=float, default=fe_color_rate,
@@ -353,6 +354,13 @@ def parse_args(pretrained_model_name_or_path, emotion, train_data_dir, learnable
                         help="Weight for HOG-like Sobel gradient orientation histogram loss.")
     parser.add_argument("--fe_dct_rate", type=float, default=fe_dct_rate,
                         help="Weight for low-frequency DCT loss.")
+
+    parser.add_argument("--fe_size", type=int, default=fe_size)
+    parser.add_argument("--fe_color_bins", type=int, default=fe_color_bins)
+    parser.add_argument("--fe_hog_bins", type=int, default=fe_hog_bins)
+    parser.add_argument("--fe_dct_size", type=int, default=fe_dct_size)
+    parser.add_argument("--fe_dct_keep", type=int, default=fe_dct_keep)
+
     parser.add_argument("--fe_pca_dim", type=int, default=fe_pca_dim,
                         help="PCA dimension for CLIP attribute embeddings; <=0 disables PCA attribute loss.")
     parser.add_argument("--fe_pca_mix", type=float, default=fe_pca_mix,
@@ -750,6 +758,11 @@ def main(args):
         color_weight=args.fe_color_rate,
         hog_weight=args.fe_hog_rate,
         dct_weight=args.fe_dct_rate,
+        feature_size=args.fe_size,
+        color_bins=args.fe_color_bins,
+        hog_bins=args.fe_hog_bins,
+        dct_size=args.fe_dct_size,
+        dct_keep=args.fe_dct_keep
     ).to(accelerator.device)
 
     # We need to recalculate our total training steps as the size of the training dataloader may have changed.

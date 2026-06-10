@@ -60,3 +60,9 @@ fe_warmup_steps: 0       # set 500~1000 if early training is unstable
 
 ## 第三次
 150000 次训练，关闭 PCA 语义，视觉特征增强 (0.6,0.4,0.2)，情感物体错误，emo_loss 明显提示 1.5 -> 2.5
+
+## 第四次
+PCAClose_150000_Best FID LPIPS (0.3,0.2,0.1) Emo-A 均有所提升，Sem-C 和 Sem-D 较差
+
+## 第五次
+PCAClose_doublePram_150000_Bad，将各参数指标翻倍 (0.6,0.4,0.2) 性能全面下降

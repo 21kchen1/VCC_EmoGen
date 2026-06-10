@@ -52,11 +52,10 @@ def _dct_matrix(n: int, device: torch.device, dtype: torch.dtype) -> torch.Tenso
 
 class FeatureEngineeringLoss(nn.Module):
     """
-    Differentiable feature-engineering losses.
+    特征工程损失值计算
 
-    pred_img and target_img should be Bx3xHxW images in [-1,1] or [0,1].
-    The returned total loss is already weighted by color_weight, hog_weight,
-    and dct_weight.
+    输入图像数据结构为 Bx3xHxW, 数值范围为 [-1, 1] 或 [0, 1]
+    输入权重大小会影响最终特征值中各部分特征占比
     """
 
     def __init__(
@@ -64,7 +63,7 @@ class FeatureEngineeringLoss(nn.Module):
         color_weight: float = 0.03,
         hog_weight: float = 0.02,
         dct_weight: float = 0.01,
-        hist_bins: int = 16,
+        color_bins: int = 16,
         hog_bins: int = 9,
         feature_size: int = 128,
         dct_size: int = 64,
@@ -79,7 +78,7 @@ class FeatureEngineeringLoss(nn.Module):
             hog_weight (float, optional): . Defaults to 0.02.
             dct_weight (float, optional): . Defaults to 0.01.
             hist_bins (int, optional): 颜色直方图分箱数量. Defaults to 16.
-            hog_bins (int, optional): _description_. Defaults to 9.
+            hog_bins (int, optional): 角度分箱数量. Defaults to 9.
             feature_size (int, optional): _description_. Defaults to 128.
             dct_size (int, optional): _description_. Defaults to 64.
             dct_keep (int, optional): _description_. Defaults to 16.
@@ -89,7 +88,7 @@ class FeatureEngineeringLoss(nn.Module):
         self.color_weight = float(color_weight)
         self.hog_weight = float(hog_weight)
         self.dct_weight = float(dct_weight)
-        self.hist_bins = int(hist_bins)
+        self.color_bins = int(color_bins)
         self.hog_bins = int(hog_bins)
         self.feature_size = int(feature_size)
         self.dct_size = int(dct_size)
@@ -127,9 +126,9 @@ class FeatureEngineeringLoss(nn.Module):
         values = x.flatten(2)
 
         # 在 [0, 1] 均匀生成 self.hist_bins 个中心点
-        centers = torch.linspace(0.0, 1.0, self.hist_bins, device=x.device, dtype=x.dtype)
+        centers = torch.linspace(0.0, 1.0, self.color_bins, device=x.device, dtype=x.dtype)
         # bin 区间宽度
-        width = 1.0 / max(self.hist_bins - 1, 1)
+        width = 1.0 / max(self.color_bins - 1, 1)
         # Soft triangular bins: B,C,N,K 计算像素值与每个 bin 中心的归一化距离，距离越小 -> 0 权重越大 -> 1
         weights = torch.relu(1.0 - torch.abs(values.unsqueeze(-1) - centers) / (width + self.eps))
         # B,C,N,K -> B,C,K
@@ -138,41 +137,82 @@ class FeatureEngineeringLoss(nn.Module):
         return hist.flatten(1)  # B, C*K
 
     def color_moments(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        颜色矩
+
+        Args:
+            x (torch.Tensor): _description_
+
+        Returns:
+            torch.Tensor: _description_
+        """
         x = _to_01(x.float())
+        # 统一特征分辨率
         x = F.interpolate(x, size=(self.feature_size, self.feature_size), mode="bilinear", align_corners=False)
+        # Bx3xHxW -> Bx3xN
         flat = x.flatten(2)
+        # 平均值 一阶矩
         mean = flat.mean(dim=-1)
+        # 标准差 二阶矩
         std = flat.std(dim=-1).clamp_min(self.eps)
+        # 偏斜度 三阶矩
         skew = (((flat - mean.unsqueeze(-1)) / std.unsqueeze(-1)) ** 3).mean(dim=-1)
         return torch.cat([mean, std, skew], dim=-1)
 
     def hog_histogram(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        梯度方向直方图
+
+        Args:
+            x (torch.Tensor): _description_
+
+        Returns:
+            torch.Tensor: _description_
+        """
         x = _to_01(x.float())
         x = F.interpolate(x, size=(self.feature_size, self.feature_size), mode="bilinear", align_corners=False)
         gray = _rgb_to_gray(x)
+        # 使用卷积计算水平和垂直梯度
         gx = F.conv2d(gray, self.sobel_x.float(), padding=1)
         gy = F.conv2d(gray, self.sobel_y.float(), padding=1)
+        # 计算梯度强度
         mag = torch.sqrt(gx * gx + gy * gy + self.eps)
-        # unsigned orientation in [0, pi)
+        # 计算梯度方向
         ori = torch.atan2(gy, gx).remainder(math.pi)
 
+        # 按角度进行分箱
         centers = torch.linspace(0.0, math.pi, self.hog_bins + 1, device=x.device, dtype=x.dtype)[:-1]
         bin_width = math.pi / self.hog_bins
-        # Circular distance to orientation centers
+        # 计算各个像素到每个方向 bin 的距离
         diff = torch.abs(ori.unsqueeze(-1) - centers)
         diff = torch.minimum(diff, math.pi - diff)
+        # 三角形软分配
         weights = torch.relu(1.0 - diff / (bin_width + self.eps))
+        # 权重直方图
         hist = (weights * mag.unsqueeze(-1)).flatten(2).sum(dim=2)  # B,1,K
+        # 归一化直方图
         hist = hist / (hist.sum(dim=-1, keepdim=True) + self.eps)
         return hist.flatten(1)
 
     def dct_lowfreq(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        低频 DCT
+
+        Args:
+            x (torch.Tensor): _description_
+
+        Returns:
+            torch.Tensor: _description_
+        """
         x = _to_01(x.float())
         x = F.interpolate(x, size=(self.dct_size, self.dct_size), mode="bilinear", align_corners=False)
         gray = _rgb_to_gray(x).squeeze(1)  # B,H,W
         n = self.dct_size
+        # DCT-II 变换矩阵
         dct = _dct_matrix(n, x.device, torch.float32)
+        # 频率域系数
         coeff = torch.matmul(torch.matmul(dct, gray.float()), dct.t())
+        # 只取左上角低频区域
         coeff = coeff[:, : self.dct_keep, : self.dct_keep]
         # Drop the DC term from the loss scale? Keep it because color/global brightness matters for FID.
         coeff = coeff.flatten(1)
@@ -261,10 +301,7 @@ def predict_x0_from_noise(
     model_pred: torch.Tensor,
 ) -> torch.Tensor:
     """
-    Recover predicted clean latent x_0 from U-Net prediction.
-
-    Stable Diffusion v1.x uses epsilon prediction. v_prediction is included for
-    compatibility with newer schedulers.
+    利用预测噪声和加噪 latent 还原去噪 latent，用于后续使用 vae 还原为图像
     """
     alphas_cumprod = noise_scheduler.alphas_cumprod.to(device=noisy_latents.device, dtype=noisy_latents.dtype)
     alpha_t = alphas_cumprod[timesteps].view(-1, 1, 1, 1)
