@@ -30,7 +30,8 @@ fe_use: true
 # fe_hog_rate: 0.02        # HOG/Sobel gradient orientation histogram
 # fe_dct_rate: 0.01        # low-frequency 2D DCT
 fe_color_rate: 0.3      # RGB soft histogram + color moments
-fe_hog_rate: 0.2        # HOG/Sobel gradient orientation histogram
+fe_hog_rate: 0.0        # HOG/Sobel gradient orientation histogram
+# fe_hog_rate: 0.2        # HOG/Sobel gradient orientation histogram
 # fe_dct_rate: 0.1        # low-frequency 2D DCT
 fe_dct_rate: 0.0        # low-frequency 2D DCT
 
