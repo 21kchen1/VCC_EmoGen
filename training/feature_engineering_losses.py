@@ -1,15 +1,16 @@
-"""
-Feature-engineering regularizers for EmoGen.
+#!/usr/bin/env python3.8
+# -*- coding: utf-8 -*-
 
-This module adds differentiable, handcrafted feature losses that can be
-back-propagated through the frozen Stable Diffusion U-Net/text encoder into
-the trainable EmoGen mapper.
-
-Included feature engineering methods:
-1) RGB soft color histogram + color moments
-2) HOG-like Sobel gradient orientation histogram
-3) Low-frequency 2D DCT coefficients
-4) PCA-whitened CLIP attribute loss helper
+r"""
+@DATE    :   2026-06-13 15:19:18
+@Author  :   Chen
+@File    :   training/feature_engineering_losses.py
+@Software:   VSCode
+@Description:
+    特征工程损失构建
+    1. 颜色直方图
+    2. 颜色矩
+    3. 梯度方向矩阵
 """
 
 from __future__ import annotations
@@ -246,7 +247,9 @@ class FeatureEngineeringLoss(nn.Module):
 
 
 class PCAProjector(nn.Module):
-    """PCA projection for whitening/noise reduction of CLIP attribute embeddings."""
+    """
+    尝试使用 PCA 优化 CLIP embedding (无效)
+    """
 
     def __init__(self, n_components: int = 256, eps: float = 1e-6) -> None:
         super().__init__()
@@ -262,7 +265,7 @@ class PCAProjector(nn.Module):
         n_components = min(self.n_components, x.shape[0] - 1, x.shape[1])
         mean = x.mean(dim=0, keepdim=True)
         xc = x - mean
-        # q slightly larger than target dimension improves stability.
+        # 尺寸增大有助于保持稳定
         q = min(n_components + 16, min(xc.shape))
         _, s, v = torch.pca_lowrank(xc, q=q, center=False)
         comps = v[:, :n_components]
@@ -287,7 +290,19 @@ def pca_attribute_ce(
     projector: PCAProjector,
     temperature: float = 10.0,
 ) -> torch.Tensor:
-    """Cross-entropy over cosine similarities in PCA-whitened CLIP attribute space."""
+    """
+    使用交叉熵计算损失
+
+    Args:
+        project_semantic (torch.Tensor): _description_
+        total_attr_embed (torch.Tensor): _description_
+        index_attr (torch.Tensor): _description_
+        projector (PCAProjector): _description_
+        temperature (float, optional): _description_. Defaults to 10.0.
+
+    Returns:
+        torch.Tensor: _description_
+    """
     attr_z = projector.transform(total_attr_embed)          # K,Dp
     sem_z = projector.transform(project_semantic)           # B,Dp
     logits = torch.matmul(sem_z, attr_z.t()) * temperature  # B,K
