@@ -1,3 +1,15 @@
+#!/usr/bin/env python3.8
+# -*- coding: utf-8 -*-
+
+r"""
+@DATE    :   2026-06-14 14:55:56
+@Author  :   Chen
+@File    :   training/main_fe.py
+@Software:   VSCode
+@Description:
+    使用特征工程增强的模型训练
+"""
+
 import argparse
 import logging
 import math
@@ -905,6 +917,7 @@ def main(args):
                         index_attr = torch.tensor([index_attr]).detach().to(score.device)
                         loss_attr = fun_loss_attr(score, index_attr)
 
+                        # 无效的PCA处理
                         if pca_projector is not None and args.fe_pca_mix > 0:
                             loss_attr_pca = pca_attribute_ce(
                                 project_semantic,
@@ -936,7 +949,7 @@ def main(args):
                     index_emo = torch.tensor([index_emo]).detach().to(pre_emo.device)
                     loss_emo = fun_loss_emo(pre_emo, index_emo)
 
-                    # Differentiable feature-engineering losses on predicted clean image.
+                    # 恢复图像并构建特征工程损失
                     loss_fe = torch.zeros((), device=model_pred.device, dtype=torch.float32)
                     loss_color = torch.zeros_like(loss_fe)
                     loss_hog = torch.zeros_like(loss_fe)
@@ -955,7 +968,7 @@ def main(args):
                         loss_hog = fe_logs["loss_hog"].to(loss_fe.device)
                         loss_dct = fe_logs["loss_dct"].to(loss_fe.device)
 
-                    # assume that distance under threshold is the same object
+                    # 特征工程拓展损失函数
                     loss_forward = (
                         (1 - attr_rate) * (loss_reconstruction + loss_fe)
                         + args.attr_rate * attr_rate * loss_attr

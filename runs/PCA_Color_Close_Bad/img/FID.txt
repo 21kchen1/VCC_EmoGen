@@ -1,0 +1,10 @@
+----------fid----------
+amusement: 148.21
+anger: 138.75
+awe: 106.01
+contentment: 97.02
+disgust: 157.72
+excitement: 103.14
+fear: 137.26
+sadness: 144.75
+aggregated: 61.21
